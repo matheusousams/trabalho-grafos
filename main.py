@@ -27,6 +27,9 @@ if __name__ == "__main__":
     print("----------------------------------------------------------------")
     # d) Um ciclo com uma qtde. de arestas maior ou igual a 5 (apresentar a sequência dos vértices).
     print(f"ciclo com uma qtde. de arestas maior ou igual a 5: {digrafo.ciclo(1)}")
+    resultado = digrafo.dfs_cycle(1,5)
+    print(f"- Sim. Aqui está a sequência dos vértices: {' -> '.join(map(str, resultado))} -> {resultado[0]}")  # adiciona o vértice inicial ao final para indicar um ciclo
+
     print("----------------------------------------------------------------")
     # e) O vértice mais distante (considerando os pesos das arestas) do vértice 129, e o valor da distância entre eles.
     print(digrafo.verticeMaisDistante(129))

@@ -203,6 +203,7 @@ class Grafo:
                         return True
                 if adjacente not in verticeVisitado:
                     if cicloDFS(adjacente,origem):
+                        print(f"caminhoDoVertice: {caminhoDoVertice}")
                         return True
             
             #remove o vértice do caminho e faz a desmarcação como visitado
@@ -215,7 +216,36 @@ class Grafo:
         if cicloDFS(v,v):
             return caminhoDoVertice
         return None
+    
+    def dfs_cycle(self, v, min_arestas, start=None, visitado=None, caminho=None, caminho_atual=None):
+        """
+        Executa uma busca em profundidade a partir do vértice v e retorna o primeiro ciclo encontrado com número de arestas maior ou igual ao mínimo especificado.
+        """
+        if visitado is None:
+            visitado = set()
+            start = v
+        if caminho is None:
+            caminho = []
+        if caminho_atual is None:
+            caminho_atual = set()
 
+        visitado.add(v)
+        caminho.append(v)
+        caminho_atual.add(v)
+
+        for vizinho, _ in self.listaDeAdjacencia.get(v, []):
+            if vizinho not in visitado:
+                result = self.dfs_cycle(vizinho, min_arestas, start, visitado, caminho, caminho_atual)
+                if result:
+                    return result
+            elif vizinho in caminho_atual and caminho[0] == start and len(
+                    caminho) - 1 >= min_arestas:
+                return caminho
+
+        caminho.pop()
+        caminho_atual.remove(v)
+
+        return None
 
     def bellmanFord(self, v):
 
